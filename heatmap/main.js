@@ -1,3 +1,6 @@
+// Read csv file containing AIS transmissions.
+// All transmissions relate to vessels in the mediterranean
+
 var medWidth = 1000;
 var medHeight = 265;
 var medArray = genMedArray();
@@ -33,10 +36,6 @@ function processRawData(rawData) {
 
 	for (var i = 1; i < rows.length; i++) {
 		var d = rows[i].split(',');
-
-//		for (var j = 0; j < d.length; j++) {
-//			d[j] = d[j].replace('"', '');
-//		}
 
 		transmissions.push({
 			mmsi: d[0],
@@ -99,6 +98,7 @@ function genMedArray(){
 }
 
 function medArrayIndex(lat, lng){
+//  Rectangle within which all the data we have fits
 //	min/max latitude 29.80 46.04:  16.24
 //	min/max longitude: -5.68 36.81:  42.49
 
