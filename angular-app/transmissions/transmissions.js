@@ -12,9 +12,10 @@ angular.module('Transmissions', ['Utils'])
       this.mmsi = raw[0];
       this.date = raw[1];
       this.time = raw[2];
-      this.sog = raw[3];
-      this.coords = [parseFloat(raw[4]), parseFloat(raw[5])];
-      this.cog = raw[6];
+      while (this.time.length < 6) {
+        this.time = '0' + this.time;
+      }
+      this.coords = [parseFloat(raw[3]), parseFloat(raw[4])];
       this.timestamp = parseFloat(this.date + this.time);
       this.color = genColor(this.mmsi);
     }

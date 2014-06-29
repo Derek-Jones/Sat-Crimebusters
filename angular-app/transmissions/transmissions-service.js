@@ -3,7 +3,6 @@
 angular.module('Transmissions')
   /* @ngInject */
   .service('TransmissionsService', function($http, Transmission, clone) {
-    var start = new Date();
     var self = this;
     self.transmissions = [];
     self.timeSeries = [];
@@ -24,7 +23,6 @@ angular.module('Transmissions')
     };
 
     function notifyListeners() {
-      debugger
       var i = listeners.length - 1;
       do {
         listeners[i].call();
@@ -132,7 +130,6 @@ angular.module('Transmissions')
       };
     }
 
-    console.log(new Date() - start);
     return this;
   }).filter('grabCoordinates', function() {
     return function(transmissions) {
