@@ -48,7 +48,11 @@ angular.module('Visualizations')
       }
 
       function radius(d) {
-        return (d.mdist > 0.00000001) ? (2 + d.mdist*2000000000) : 2;
+        if (data.active.indexOf(d.mmsi) !== -1) {
+          return (d.mdist > 0.001) ? (2 + d.mdist*2) : 2;
+        } else {
+          return 2;
+        }
       }
 
       function opacity(d) {

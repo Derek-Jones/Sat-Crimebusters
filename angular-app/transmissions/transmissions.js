@@ -15,6 +15,7 @@ angular.module('Transmissions', ['Utils'])
       this.coords = [parseFloat(raw[3]), parseFloat(raw[4])];
       this.timestamp = parseFloat(this.date + this.time);
       this.color = genColor(this.mmsi);
+      this.mdist = raw[5];
     }
 
     Transmission.prototype.longitude = function() { return this.coords[0]; };
