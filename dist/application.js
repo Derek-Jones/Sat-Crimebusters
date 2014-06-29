@@ -29,7 +29,7 @@ angular.module('Utils', [])
             .range([0 + self.marginLeft, self.width - self.marginRight]);
         self.yMap = d3.scale.linear()
             .domain([self.bounds.y[0] + 0.5, self.bounds.y[1] + 0.5])
-            .range([-self.height + self.marginBottom, 0 - self.marginTop]);
+            .range([self.height - self.marginBottom, 0 + self.marginTop]);
         break;
     }
 
@@ -103,9 +103,6 @@ angular.module('Transmissions', ['Utils'])
       this.mmsi = raw[0];
       this.date = raw[1];
       this.time = raw[2];
-      while (this.time.length < 6) {
-        this.time = '0' + this.time;
-      }
       this.coords = [parseFloat(raw[3]), parseFloat(raw[4])];
       this.timestamp = parseFloat(this.date + this.time);
       this.color = genColor(this.mmsi);
@@ -229,7 +226,7 @@ angular.module('Transmissions')
     }
 
     function processTransmissions(transmissions) {
-      var interval = 100*100;
+      var interval = 200*100;
       var compressedSeries = {};
       var i, j;
       var sorted = transmissions.sort(function(a, b) {
@@ -365,7 +362,7 @@ angular.module('Visualizations')
 
       var line = d3.svg.line()
           .x(function(d) { return setup.xMap(d[0]); })
-          .y(function(d) { return -setup.yMap(d[1]); });
+          .y(function(d) { return setup.yMap(d[1]); });
 
       svg.selectAll('.vessel-route')
           .data(compressedSeries)
@@ -387,6 +384,41 @@ angular.module('Visualizations')
       }
     };
   }]);
+
+'use strict';
+
+angular.module('Visualizations')
+    /* @ngInject */
+    .directive('transmissionsFrequency', ['TransmissionsService', 'setupD3', function(TransmissionsService, setupD3) {
+      var transmissions = TransmissionsService.transmissions;
+      var setup, svg;
+
+      TransmissionsService.addListener(function() {
+        transmissions = TransmissionsService.transmissions;
+      });
+
+      function link(scope, element, attrs) {
+        svg = d3.select(element[0]).select('svg');
+
+        setup = setupD3({
+          width: scope.width(),
+          height: scope.height(),
+          bounds: scope.bounds(),
+          svg: svg
+        });
+      }
+
+      return {
+        restrict: 'E',
+        templateUrl: 'visualizations/transmissions-frequency.html',
+        link: link,
+        scope: {
+          width: "&ocWidth",
+          height: "&ocHeight",
+          bounds: "&ocBounds"
+        }
+      };
+    }]);
 
 'use strict';
 
@@ -430,11 +462,15 @@ angular.module('Visualizations')
       }
 
       function y(d) {
-        return -setup.yMap(d.coords[1]);
+        return setup.yMap(d.coords[1]);
       }
 
       function color(d) {
         return d.color;
+      }
+
+      function radius(d) {
+        return (d.mdist > 0.00000001) ? (2 + d.mdist*2000000000) : 2;
       }
 
       function opacity(d) {
@@ -448,7 +484,7 @@ angular.module('Visualizations')
       function applyUpdates(d) {
         d.attr('cx', x)
             .attr('cy', y)
-            .attr('r', 2)
+            .attr('r', radius)
             .style('fill', color)
             .style('opacity', opacity);
       }
@@ -505,6 +541,8 @@ angular.module('Visualizations')
     };
   }]);
 
-angular.module("App").run(["$templateCache", function($templateCache) {$templateCache.put("views/routes.html","<route-trace oc-width=\"width\" oc-height=\"height\" oc-bounds=\"bounds\"></route-trace>\n");
+angular.module("App").run(["$templateCache", function($templateCache) {$templateCache.put("views/graphs.html","<transmissions-frequency oc-bounds=\"bounds\" oc-width=\"width\" oc-height=\"height\"></transmissions-frequency>\n");
+$templateCache.put("views/routes.html","<route-trace oc-width=\"width\" oc-height=\"height\" oc-bounds=\"bounds\"></route-trace>\n");
 $templateCache.put("views/track.html","<vessel-tracking oc-width=\"width\" oc-height=\"height\" oc-bounds=\"bounds\"></vessel-tracking>\n");
+$templateCache.put("visualizations/transmissions-frequency.html","<svg></svg>\n");
 $templateCache.put("visualizations/vessel-tracking.html","<svg>\n  <g transform=\"translate(10, 25)\">\n    <text class=\"timestamp\"></text>\n  </g>\n</svg>\n");}]);

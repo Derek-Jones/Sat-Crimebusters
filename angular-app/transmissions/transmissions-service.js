@@ -57,7 +57,7 @@ angular.module('Transmissions')
     }
 
     function processTransmissions(transmissions) {
-      var interval = 100*100;
+      var interval = 200*100;
       var compressedSeries = {};
       var i, j;
       var sorted = transmissions.sort(function(a, b) {

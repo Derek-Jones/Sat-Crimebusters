@@ -18,7 +18,7 @@ angular.module('Visualizations')
 
       var line = d3.svg.line()
           .x(function(d) { return setup.xMap(d[0]); })
-          .y(function(d) { return -setup.yMap(d[1]); });
+          .y(function(d) { return setup.yMap(d[1]); });
 
       svg.selectAll('.vessel-route')
           .data(compressedSeries)

@@ -40,11 +40,15 @@ angular.module('Visualizations')
       }
 
       function y(d) {
-        return -setup.yMap(d.coords[1]);
+        return setup.yMap(d.coords[1]);
       }
 
       function color(d) {
         return d.color;
+      }
+
+      function radius(d) {
+        return (d.mdist > 0.00000001) ? (2 + d.mdist*2000000000) : 2;
       }
 
       function opacity(d) {
@@ -58,7 +62,7 @@ angular.module('Visualizations')
       function applyUpdates(d) {
         d.attr('cx', x)
             .attr('cy', y)
-            .attr('r', 2)
+            .attr('r', radius)
             .style('fill', color)
             .style('opacity', opacity);
       }

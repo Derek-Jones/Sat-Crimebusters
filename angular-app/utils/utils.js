@@ -29,7 +29,7 @@ angular.module('Utils', [])
             .range([0 + self.marginLeft, self.width - self.marginRight]);
         self.yMap = d3.scale.linear()
             .domain([self.bounds.y[0] + 0.5, self.bounds.y[1] + 0.5])
-            .range([-self.height + self.marginBottom, 0 - self.marginTop]);
+            .range([self.height - self.marginBottom, 0 + self.marginTop]);
         break;
     }
 

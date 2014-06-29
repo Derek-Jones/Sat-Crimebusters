@@ -16,7 +16,7 @@ app.get('/transmissions', function(req, res) {
   res.send(transmissionsData);
 });
 
-fs.readFile('resources/60-anon.csv', function(err, contents) {
+fs.readFile('resources/60-preprocessed.csv', function(err, contents) {
   if (err) {
     console.error(err);
     process.exit();
