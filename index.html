@@ -40,7 +40,9 @@ The event was hosted by the <a href="https://sa.catapult.org.uk/">Satellite Appl
 <h2>
 <a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
 
-<p>The data consists of around 250,000 received AIS transmissions per day over 30 days from something like 17,500 distinct vessels.</p>
+<p>The original purpose of AIS was as a collision avoidance system; knowing where nearby vessels are, there direction and speed, making it easier for them to not collide with each other.  An experiment on the International Space Station proved that it was possible to detect these signals from space and satellites were launched to obtaining world wide information on vessels.</p>
+
+<p>The data provided for the Inventorthon consists of around 250,000 received AIS transmissions per day over 30 days from something like 17,500 distinct vessels travelling around the Mediterranean.</p>
 
 <p>Only vessels over 300 <a href="http://en.wikipedia.org/wiki/Gross_tonnage">gross tonnage</a> are required to transmit AIS information.</p>
 
@@ -51,17 +53,30 @@ The event was hosted by the <a href="https://sa.catapult.org.uk/">Satellite Appl
 <h2>
 <a name="data-analysis" class="anchor" href="#data-analysis"><span class="octicon octicon-link"></span></a>Data analysis</h2>
 
-<p><strong>Where are vessels claiming to be when they transmit?</strong>  The following are the contours of vessel locations:</p>
+<p><strong>Where are vessels claiming to be when they transmit?</strong>  The following are the contours of vessel locations (imagine a map of the mediterranean supperimposed over these contours):</p>
 
 <p><img src="https://raw.githubusercontent.com/Derek-Jones/Sat-Crimebusters/master/images/vessel-density-22.png" alt="Contours of transmission locations"></p>
+
+<p>This density information could be used to locate vessels in locations where they are unlikely to encounter other vessels (useful when transferring goods between vessels).</p>
 
 <p><strong>What routes are vessels taking?</strong> The following are lines connecting all transmissions from the same vessel. Some vessels only switch on AIS when in port, so in these cases lines join start/stop ports.</p>
 
 <p><img src="https://raw.githubusercontent.com/Derek-Jones/Sat-Crimebusters/master/images/vessel%20routes%20(2014-05-19%20to%202014-05-22).png" alt="Routes of transmission by each vessel"></p>
 
-<p><strong>How many transmissions do vessels make per day?</strong>  The following shows the number of vessels making a given number of transmissions each day (over one month).  Many vessels make many transmissions per day, while many make very few, with the remaining being somewhere inbetween.</p>
+<p><strong>How many transmissions do vessels make per day?</strong>   A lot of vessels make many transmissions per day, while some make very few, with the remaining being somewhere in between.</p>
+
+<p><img src="https://raw.githubusercontent.com/Derek-Jones/Sat-Crimebusters/master/images/trans-one-day.png" alt="Transmissions for 1 day"></p>
+
+<p>The following plot gives the same information as above, but for every day of a month, showing that the same daily pattern is repeated.</p>
 
 <p><img src="https://raw.githubusercontent.com/Derek-Jones/Sat-Crimebusters/master/images/trans-per-mmsi.png" alt="Transmissions per day over a month"></p>
+
+<h2>
+<a name="future-patterns-to-search-for" class="anchor" href="#future-patterns-to-search-for"><span class="octicon octicon-link"></span></a>Future patterns to search for</h2>
+
+<p>Vessels generally travel between land based locations.  Meeting another vessel at sea is an unusual activity.  Flagging vessels which appear to be moving slowly in the same location sounds worthwhile.</p>
+
+<p>Distance travelled between transmissions.  There is a maximum distance that a vessel can travel between transmissions.  Flagging vessels that travel further than some maximum distance distance sounds worthwhile.</p>
       </section>
     </div>
 
